@@ -1,0 +1,9 @@
+Procura de arquivo
+	find: arquivo  
+
+Mudar cor tema
+
+	colosheme arquivo.vim
+
+todos os arquivos
+  :scriptnameslistar 

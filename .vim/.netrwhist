@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/etc/vim'
+let g:netrw_dirhist_2='/HD_EXTERNO'
+let g:netrw_dirhist_3='/HD_EXTERNO/Documentos'
+let g:netrw_dirhist_4='/HD_EXTERNO/Documentos/LINGUAGEM-DE-PROGRAMA'
+let g:netrw_dirhist_5='/HD_EXTERNO/Documentos/LINGUAGEM-DE-PROGRAMA/Nodejs'
+let g:netrw_dirhist_6='/HD_EXTERNO/Documentos/LINGUAGEM-DE-PROGRAMA/Nodejs/passport'
+let g:netrw_dirhist_7='/usr/share/vim/addons/syntax'
+let g:netrw_dirhist_8='/home/juniored'
