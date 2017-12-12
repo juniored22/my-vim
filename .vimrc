@@ -1,7 +1,10 @@
-"--------------------- The Ho_My_VI vimrc file-------------
+"-------------------- The Ho_My_VI vimrc file-------------
 "
 "   Maintainer:	Bram Moolenaar <tesserato.csi@gmail.com>
 "   Last change:	2017 Nov 05
+"
+"
+"   https://woliveiras.com.br/vimparanoobs/chapters/marcas.html
 "
 "-----------------------------------------------------------
 
@@ -20,22 +23,33 @@ au BufNewFile,BufRead *.js set dictionary=/opt/dicionarioVim/node.dict
 "au BufEnter *.py if getline(1) == "" | :call setline(1, "#!/bin/env python") | endif
 "au BufEnter *.py if getline(1) == "#!/bin/env python" | :call setline(2, "## -*- coding: utf-8 -*-") | endif
 "au! BufNewFile,BufRead *.txt let b:spell_language="brasileiro"
-"autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 
 let g:user_emmet_mode='n'          " Only enable normal mode functions.
 let g:user_emmet_mode='inv'        " Enable all functions, which is equal to
 let g:user_emmet_mode='a'          " Enable all function in all mode.
 let g:molokai_original = 100
-let g:airline_theme = 'archery'
+"let g:airline_theme = 'archery'
+"let g:airline_theme = 'delek'
 let g:user_emmet_install_global = 0 "Emmet
 
 syntax on
-colorscheme archery
+"colorscheme archery
+"colorscheme delek
+colorscheme torte
 autocmd FileType html,css EmmetInstall "Emmet
 filetype indent on                "carregar arquivos de recuo específicos do tipo de arquivo
 filetype plugin indent on
-
-
+highlight Normal ctermbg   =Black
+highlight Cursor ctermbg   =Green
+highlight NonText ctermbg  =Black
+highlight Special ctermbg  =DarkMagenta
+highlight Comment ctermbg  =DarkGray
+highlight Constant ctermbg =Blue
+"highlight Comment ctermbg=Blue ctermfg=White
+highlight Comment cterm=underline ctermbg=Blue ctermfg=White
+highlight clear SpellBad
+highlight SpellBad term=reverse cterm=underline
 
 inoremap <C-T> <C-O>:tabnew<CR>    " Abas
 inoremap <C-TAB> <C-O>:tabnext<CR>
@@ -44,14 +58,21 @@ inoremap <C-F4> <C-O>:x!<CR>
 inoremap <C-U> <C-G>u<C-U>
 inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
 
+autocmd BufRead *.html  let g:user_emmet_expandabbr_key='<Tab>'
+autocmd BufRead *.html  imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+
 map Q gq
 map <F2> :tabnew<CR>               " Abre um novo arquivo em outra aba
 map <F3> gt                        " Navega arquivo em outra aba
 "map <F7> :SpellCheck<CR>
 "map <F8> :SpellProposeAlternatives<CR>
+
 nmap <F4> :NERDTreeToggle<CR>
+
+imap ><Tab> ><Esc>mt?<\w<Cr>:let @/=""<Cr>lyiw`ta</><Esc>P`tli "Fechamento automático de Tags HTML
+
 let NERDTreeShowHidden = 1
-let NERDTreeIgnore = [
+let RDTreeIgnore = [
   \'\.DS_Store$',
   \'\.bundle$',
   \'\.capistrano$',
@@ -66,7 +87,7 @@ let NERDTreeIgnore = [
   \'tags$'
 \]
 
-
+set smartindent                    " Liga a identação inteligente
 set backspace=indent,eol,start     " Allow backspacing over everything in insert mode.
 set history=200		                 " keep 200 lines of command line history
 set ruler		                       " Exibi o cursor na posição que o arquivo foi encerado
@@ -86,7 +107,7 @@ set autoindent                     " auto indentacao
 set title                          " exibe titulo arquivo
 set nowrap                         " nao quebra linha quando tem uma string grande
 set scrolloff=5                    " exibi sempre 5 linha não deicha cursor tocar no fim do arquivo
-"set paste                          "  indenta no ato de coloar
+"set paste                          "  indenta no ato de colar
 set wildmode=list:longest,full
 set shiftwidth=4
 set showtabline=2
@@ -110,6 +131,9 @@ set hlsearch                       " Termo procurado em destaque
 set pumheight=15                   " Máximo de palavras no popup de autocomplete
 set completeopt=menu,preview       " Como mostrar as possibilidade de inserção
 set spelllang=pt                   " Escolhe o dicionário
+set eb                             " Apita cada vez que você errar um comando.
+"set spell                          " checking ortografia
+"set spell spelllang=pt             " set idioma
 
 
 
@@ -143,16 +167,16 @@ if &t_Co > 2 || has("gui_running")
   let c_comment_strings=1
 endif
 
-if has("autocmd")
-  filetype plugin indent on
-  augroup vimStartup
-    au!
-    autocmd BufReadPost *
-      \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
-      \ |   exe "normal! g`\""
-      \ | endif
-  augroup END
-endif " has("autocmd")
+"if has("autocmd")
+"  filetype plugin indent on
+"  augroup vimStartup
+"    au!
+"    autocmd BufReadPost *
+"      \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+"      \ |   exe "normal! g`\""
+"      \ | endif
+"  augroup END
+"endif " has("autocmd")
 
 if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
@@ -171,11 +195,39 @@ function! Tab_Or_Complete()
   endif
 endfunction
 
+" recarregar o vimrc
+" Source the .vimrc or _vimrc file, depending on system
+if &term == "win32" || "pcterm" || has("gui_win32")
+        map ,v :e $HOME/_vimrc<CR>
+        nmap <F12> :!source ~/_vimrc <BAR> echo "Vimrc recarregado!"<CR>
+else
+        map ,v :e $HOME/.vimrc<CR>
+        nmap <F12> :<C-u>source ~/.vimrc <BAR> echo "Vimrc recarregado!"<CR>
+endif
+
+
+autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal g`\"" |
+    \ endif
+
+
+ " rola janela alternativa
+ fun! ScrollOtherWindow(dir)
+        if a:dir == "down"
+                let move = "\<C-E>"
+        elseif a:dir == "up"
+                let move = "\<C-Y>"
+        endif
+        exec "normal \<C-W>p" . move . "\<C-W>p"
+ endfun
+ nmap <silent> <M-Down> :call ScrollOtherWindow("down")<CR>
+ nmap <silent> <M-Up> :call ScrollOtherWindow("up")<CR>
 
 
 "---------------------- NOTAS VIM--------------------------
 "criei um arquivo chamado dicionario onde coloco todas as palavras que
-"ultiilizo para codigo entao adicionei esse trexo abaixo para dar o auto
+"ultimai-o para codigo entao adicionei esse trexo abaixo para dar o auto
 "coplite no vim apertando Ctrl+x e Ctrl+k ai ele completa
 "set dictionary=/opt/dicionarioVim/*
 
@@ -183,6 +235,123 @@ endfunction
 "nnoremap <silent> <leader>a :ArgWrap<CR>
 
 "Emmet----------
-" html:5   (Contrl+y+,) 
+" html:5   (Contrl+y+,)
 ":Emmet h1
 "https://docs.emmet.io/customization/snippets/
+"
+"map - Criamos um Mapeamento em modo comando
+
+"imap - Mapeamento em modo de inserção.
+
+"cmap - Mapeamento em modo de linha de comando
+
+"vmap - Mapeamento no modo visual
+
+"nmap - apenas no modo Normal
+
+
+"Comando externos
+"Digite :! comando para executar um comando externo ao editor.
+"
+"
+"
+"Oculta linhas e exibe se preciso
+"zf<numero_de_linha>j
+"
+"ex:
+"zf10j
+"
+"exibir
+"zo
+"
+"Uma maneira mais fácil de criar os folders é entrando no modo visual (v),
+"selecionando o bloco e pressionando zf.
+"
+"zfap - Cria uma dobra para o parágrafo atual
+
+"zf/palavra - Cria uma dobra até a "palavra"
+
+"zo - Abre a dobra onde o cursor estiver
+
+"zR - Abre todas as dobras do arquivo atual
+
+"zc - Fecha a dobra onde o cursor estiver
+
+"zd - Apaga o folder (o conteúdo não é apagado)
+
+"zj - Desce até a próxima dobra
+
+"zk - Sobe até a próxima dobra
+"
+"
+"
+"]s vai para a próxima palavra.
+"[s vai para a palavra anterior.
+
+"z= mostra a lista de sugestões para a palavra.
+
+"zg adiciona a palavra sob o cursor no dicionário, assim ela não será mais marcada como errada.
+" zug desfaz a última palavra adicionada.
+"zw remove a palavra sob o cursor do dicionário, assim ela será marcada como errada.
+"zuw desfaz ultima palavra removida.
+
+"Tecla            : Tecla mapeada
+"<CR>             : Enter
+"<ESC>            : Escape
+"<LEADER>         : normalmente \
+"<BAR>            : | pipe
+"<CWORD>          : Palavra sob o cursor
+"<CFILE>          : Arquivo sob o cursor
+"<CFILE><         : Arquivo sob o cursor sem extensão
+"<SFILE>          : Conteúdo do arquivo sob o cursor
+"<LEFT>           : Salta um caractere para esquerda
+"<UP>             : Equivale clicar em 'seta acima'
+"<M-F4>           : A tecla ALT -> M  mais a tecla F4
+"<C-f>            : Control f
+"<BS>             : Backspace
+"<space>          : Espaço
+"<TAB>            : Tab
+"<C-X>            : onde 'C'  corresponde a CTRL e 'X' a uma tecla qualquer
+"<Left>           : seta para a esquerda
+"<Right>          : seta para a direita
+"<C-M-A>          : CTRL+ALT+A
+"
+"
+"
+" \s ................ espaço
+" \+ ................ uma ou mais vezes
+" $ ................. no final da linha
+" \| ................ ou
+" " " ............... espaço (veja imagem acima)
+" \+ ................ uma ou mais vezes
+" \ze ............... até o fim
+" \t ................ tabulação
+
+"
+"MACRO
+"
+"define macro @s = :w para salvar 
+"let @s=":w"
+"Para executar a macro 's' definida acima faça:
+"@s
+
+
+
+"COMANDOS
+"contr+w  2x                     " muda de janela
+"contr+w+n                       " abre nova janela na mesma janela do arquivo atual
+"contr+n+k                       " lista sugestão
+"contr+v                         " escolhe linhas e shift i inseri o texto e ESC para aplicar o texto
+"/string <CR> cgn strin ESC ...  " Substituir todos os textos selecionados
+"execute "rightbelow vsplit novoAquivo.txt"
+":tab nome_do_arquivo            " Abre o arquivo em uma nova aba
+":tabnew                         " Abre uma nova aba em branco
+"gt                              " Vai para a próxima aba
+"gT                              " Volta a aba anterior
+"CTRL+Page Down                  " Mesmo que gt
+"CTRL+Page Up                    " Mesmo que gT
+":tabc                           " Fecha a aba atual
+":tab split                      " Copia o conteúdo da aba atual em uma nova aba
+":vsp                            " Divide janela verticalmente
+":sp                             " Divide horizontalmente
+":vsp arquivo_x                  " Arquivos na para divisão
