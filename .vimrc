@@ -1,15 +1,14 @@
 "-------------------- The Ho_My_VI vimrc file-------------
 "
-"   Maintainer:	Bram Moolenaar <tesserato.csi@gmail.com>
+"   Maintainer:	Edgard Junior <tesserato.csi@gmail.com>
 "   Last change:	2017 Nov 05
 "
-"
+"   Ref:
 "   https://woliveiras.com.br/vimparanoobs/chapters/marcas.html
 "
 "-----------------------------------------------------------
 
 execute pathogen#infect()
-
 
 au BufNewFile,BufRead *.py set dictionary=/opt/dicionarioVim/python.dict
 au BufNewFile,BufRead *.py set dictionary=/opt/dicionarioVim/python.dict
@@ -46,8 +45,8 @@ highlight NonText ctermbg  =Black
 highlight Special ctermbg  =DarkMagenta
 highlight Comment ctermbg  =DarkGray
 highlight Constant ctermbg =Blue
-"highlight Comment ctermbg=Blue ctermfg=White
-highlight Comment cterm=underline ctermbg=Blue ctermfg=White
+"highlight Comment ctermbg  =Blue ctermfg=White
+highlight Comment cterm    =underline ctermbg=Blue ctermfg=White
 highlight clear SpellBad
 highlight SpellBad term=reverse cterm=underline
 
@@ -89,12 +88,12 @@ let RDTreeIgnore = [
 
 set smartindent                    " Liga a identação inteligente
 set backspace=indent,eol,start     " Allow backspacing over everything in insert mode.
-set history=200		                 " keep 200 lines of command line history
-set ruler		                       " Exibi o cursor na posição que o arquivo foi encerado
-set showcmd		                     " Exibi comandos incompletos
-set ttimeout		                   " Tempo limites para códigos-chaves
-set ttimeoutlen=100	               " Espera ate 1000ms após ESC para chaves especiais
-"set display=truncate              " Show @@@ in the last line if it is truncated.
+set history=200		           " keep 200 lines of command line history
+set ruler		           " Exibi o cursor na posição que o arquivo foi encerado
+set showcmd		           " Exibi comandos incompletos
+set ttimeout		           " Tempo limites para códigos-chaves
+set ttimeoutlen=100	           " Espera ate 1000ms após ESC para chaves especiais
+"set display=truncate               " Show @@@ in the last line if it is truncated.
 set nrformats-=octal               " Não reconhece números octais
 set tabstop=4
 set softtabstop=4
@@ -107,13 +106,13 @@ set autoindent                     " auto indentacao
 set title                          " exibe titulo arquivo
 set nowrap                         " nao quebra linha quando tem uma string grande
 set scrolloff=5                    " exibi sempre 5 linha não deicha cursor tocar no fim do arquivo
-"set paste                          "  indenta no ato de colar
+"set paste                          " indenta no ato de colar
 set wildmode=list:longest,full
 set shiftwidth=4
 set showtabline=2
 set laststatus=2
 set encoding=utf8
-"set mouse=a		                     " Enable mouse usage (all modes)
+"set mouse=a		            " Enable mouse usage (all modes)
 set linebreak                      " Quebra a linha sem quebrar a palavra
 set nobackup                       " Não salva arquivos de backup~
 set wildmode=longest,list          " Completa o comando com TAB igual o bash
@@ -250,7 +249,7 @@ autocmd BufReadPost *
 "nmap - apenas no modo Normal
 
 
-"Comando externos
+"Comandos externos
 "Digite :! comando para executar um comando externo ao editor.
 "
 "
