@@ -22,21 +22,43 @@ au BufNewFile,BufRead *.js set dictionary=/opt/dicionarioVim/node.dict
 "au BufEnter *.py if getline(1) == "" | :call setline(1, "#!/bin/env python") | endif
 "au BufEnter *.py if getline(1) == "#!/bin/env python" | :call setline(2, "## -*- coding: utf-8 -*-") | endif
 "au! BufNewFile,BufRead *.txt let b:spell_language="brasileiro"
+
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 
+autocmd vimenter * NERDTree "open a NERDTree automatically when vim starts up
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif  "close vim if the only window left open is a NERDTree
+
+"--
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif "open NERDTree automatically when vim starts up on opening a directory
+"--
+"--
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif "open a NERDTree automatically when vim starts up if no files were specified?
+"--
 let g:user_emmet_mode='n'          " Only enable normal mode functions.
 let g:user_emmet_mode='inv'        " Enable all functions, which is equal to
 let g:user_emmet_mode='a'          " Enable all function in all mode.
 let g:molokai_original = 100
+let g:NERDTreeDirArrowExpandable = '🗀 '
+let g:NERDTreeDirArrowCollapsible = '🗁 '
+
 "let g:airline_theme = 'archery'
+let g:lightline = {
+    \ 'colorscheme': 'archery',
+    \ }
 "let g:airline_theme = 'delek'
+
 let g:user_emmet_install_global = 0 "Emmet
+
 
 syntax on
 "colorscheme archery
 "colorscheme delek
-colorscheme torte
+"colorscheme torte
+colorscheme dracula
 autocmd FileType html,css EmmetInstall "Emmet
+
 filetype indent on                "carregar arquivos de recuo específicos do tipo de arquivo
 filetype plugin indent on
 highlight Normal ctermbg   =Black
@@ -62,9 +84,11 @@ autocmd BufRead *.html  imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
 map Q gq
 map <F2> :tabnew<CR>               " Abre um novo arquivo em outra aba
-map <F3> gt                        " Navega arquivo em outra aba
+:nmap <F3> :vimgrep<space><CR>
+"map <F3> gt                        " Navega arquivo em outra aba
 "map <F7> :SpellCheck<CR>
 "map <F8> :SpellProposeAlternatives<CR>
+
 
 nmap <F4> :NERDTreeToggle<CR>
 
