@@ -6,6 +6,17 @@
 "   Ref:
 "   https://woliveiras.com.br/vimparanoobs/chapters/marcas.html
 "
+"
+"                                              _
+"             _ __ ___  _   _     __   _(_)_ __ ___
+"            | '_ ` _ \| | | |____\ \ / / | '_ ` _ \
+"           _| | | | | | |_| |_____\ V /| | | | | | |
+"          (_)_| |_| |_|\__, |      \_/ |_|_| |_| |_|
+"                                |___/
+"
+"
+"
+"
 "-----------------------------------------------------------
 
 execute pathogen#infect()
@@ -109,16 +120,18 @@ let RDTreeIgnore = [
   \'\.swp$',
   \'tags$'
 \]
-
+set cc=80
 set smartindent                    " Liga a identação inteligente
 set backspace=indent,eol,start     " Allow backspacing over everything in insert mode.
 set history=200		           " keep 200 lines of command line history
 set ruler		           " Exibi o cursor na posição que o arquivo foi encerado
-set showcmd		           " Exibi comandos incompletos
 set ttimeout		           " Tempo limites para códigos-chaves
 set ttimeoutlen=100	           " Espera ate 1000ms após ESC para chaves especiais
 "set display=truncate               " Show @@@ in the last line if it is truncated.
+set bk                              "ativa backup
+set backupdir=expand('~/.vim/backup/') "pasta de backuo 
 set nrformats-=octal               " Não reconhece números octais
+set ts=2                          "tab 
 set tabstop=4
 set softtabstop=4
 set number
@@ -156,7 +169,14 @@ set completeopt=menu,preview       " Como mostrar as possibilidade de inserção
 set spelllang=pt                   " Escolhe o dicionário
 set eb                             " Apita cada vez que você errar um comando.
 "set spell                          " checking ortografia
-"set spell spelllang=pt             " set idioma
+"set spell spelllang=pt            " set idioma
+"fecha automaticamente (), {},[], \"" e '' 
+imap ( ()<esc>i                    
+inoremap ( ()<esc>i
+inoremap { {<Char-13>}<esc>i
+inoremap [ []<esc>
+inoremap " ""<esc>i
+inoremap ' ''<esc>i
 
 
 
