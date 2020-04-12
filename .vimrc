@@ -19,94 +19,42 @@
 "
 "-----------------------------------------------------------
 
-execute pathogen#infect()
+ execute pathogen#infect()
 
-au BufNewFile,BufRead *.py set dictionary=/opt/dicionarioVim/python.dict
-au BufNewFile,BufRead *.py set dictionary=/opt/dicionarioVim/python.dict
-au BufNewFile,BufRead *.php set dictionary=/opt/dicionarioVim/php.dict
-au BufNewFile,BufRead *.html set dictionary=/opt/dicionarioVim/html.dict
-au BufNewFile,BufRead *.css set dictionary=/opt/dicionarioVim/css.dict
-au BufNewFile,BufRead *.java set dictionary=/opt/dicionarioVim/java.dict
-au BufNewFile,BufRead *.js set dictionary=/opt/dicionarioVim/node.dict
+ au BufNewFile,BufRead *.py set dictionary=/opt/dicionarioVim/python.dict
+ au BufNewFile,BufRead *.py set dictionary=/opt/dicionarioVim/python.dict
+ au BufNewFile,BufRead *.php set dictionary=/opt/dicionarioVim/php.dict
+ au BufNewFile,BufRead *.html set dictionary=/opt/dicionarioVim/html.dict
+ au BufNewFile,BufRead *.css set dictionary=/opt/dicionarioVim/css.dict
+ au BufNewFile,BufRead *.java set dictionary=/opt/dicionarioVim/java.dict
+ au BufNewFile,BufRead *.js set dictionary=/opt/dicionarioVim/node.dict
 "au BufNewFile,BufRead *.txt source /opt/snippetVim/sintaxTxt.vim
 "au BufEnter *.sh if getline(1) == "" | :call setline(1, "#!/bin/bash") | endif
 "au BufEnter *.py if getline(1) == "" | :call setline(1, "#!/bin/env python") | endif
 "au BufEnter *.py if getline(1) == "#!/bin/env python" | :call setline(2, "## -*- coding: utf-8 -*-") | endif
 "au! BufNewFile,BufRead *.txt let b:spell_language="brasileiro"
 
-autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+ autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+ autocmd vimenter * NERDTree "open a NERDTree automatically when vim starts up
+ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif  "close vim if the only window left open is a NERDTree
+ autocmd StdinReadPre * let s:std_in=1
+ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif "open NERDTree automatically when vim starts up on opening a directory
+ autocmd StdinReadPre * let s:std_in=1
+ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif "open a NERDTree automatically when vim starts up if no files were specified?
+ autocmd FileType html,css EmmetInstall "Emmet
+ autocmd BufRead *.html  let g:user_emmet_expandabbr_key='<Tab>'
+ autocmd BufRead *.html  imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
-autocmd vimenter * NERDTree "open a NERDTree automatically when vim starts up
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif  "close vim if the only window left open is a NERDTree
-
-"--
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif "open NERDTree automatically when vim starts up on opening a directory
-"--
-"--
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif "open a NERDTree automatically when vim starts up if no files were specified?
-"--
-let g:user_emmet_mode='n'          " Only enable normal mode functions.
-let g:user_emmet_mode='inv'        " Enable all functions, which is equal to
-let g:user_emmet_mode='a'          " Enable all function in all mode.
-let g:molokai_original = 100
-let g:NERDTreeDirArrowExpandable = '🗀 '
-let g:NERDTreeDirArrowCollapsible = '🗁 '
-
-"let g:airline_theme = 'archery'
-let g:lightline = {
-    \ 'colorscheme': 'archery',
-    \ }
-"let g:airline_theme = 'delek'
-
-let g:user_emmet_install_global = 0 "Emmet
-
-
-syntax on
-"colorscheme archery
-"colorscheme delek
-"colorscheme torte
-colorscheme dracula
-autocmd FileType html,css EmmetInstall "Emmet
-
-filetype indent on                "carregar arquivos de recuo específicos do tipo de arquivo
-filetype plugin indent on
-highlight Normal ctermbg   =Black
-highlight Cursor ctermbg   =Green
-highlight NonText ctermbg  =Black
-highlight Special ctermbg  =DarkMagenta
-highlight Comment ctermbg  =DarkGray
-highlight Constant ctermbg =Blue
-"highlight Comment ctermbg  =Blue ctermfg=White
-highlight Comment cterm    =underline ctermbg=Blue ctermfg=White
-highlight clear SpellBad
-highlight SpellBad term=reverse cterm=underline
-
-inoremap <C-T> <C-O>:tabnew<CR>    " Abas
-inoremap <C-TAB> <C-O>:tabnext<CR>
-inoremap <C-S-TAB> <C-O>:tabprevious<CR>
-inoremap <C-F4> <C-O>:x!<CR>
-inoremap <C-U> <C-G>u<C-U>
-inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
-
-autocmd BufRead *.html  let g:user_emmet_expandabbr_key='<Tab>'
-autocmd BufRead *.html  imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-
-map Q gq
-map <F2> :tabnew<CR>               " Abre um novo arquivo em outra aba
-:nmap <F3> :vimgrep<space><CR>
-"map <F3> gt                        " Navega arquivo em outra aba
-"map <F7> :SpellCheck<CR>
-"map <F8> :SpellProposeAlternatives<CR>
-
-
-nmap <F4> :NERDTreeToggle<CR>
-
-imap ><Tab> ><Esc>mt?<\w<Cr>:let @/=""<Cr>lyiw`ta</><Esc>P`tli "Fechamento automático de Tags HTML
-
-let NERDTreeShowHidden = 1
-let RDTreeIgnore = [
+ let g:user_emmet_mode='n'          " Only enable normal mode functions.
+ let g:user_emmet_mode='inv'        " Enable all functions, which is equal to
+ let g:user_emmet_mode='a'          " Enable all function in all mode.
+ let g:molokai_original = 100
+ let g:NERDTreeDirArrowExpandable = '🗀 '
+ let g:NERDTreeDirArrowCollapsible = '🗁 '
+ let g:user_emmet_install_global = 0 "Emmet
+ let g:lightline = {'colorscheme': 'archery'}
+ let NERDTreeShowHidden = 1
+ let RDTreeIgnore = [
   \'\.DS_Store$',
   \'\.bundle$',
   \'\.capistrano$',
@@ -119,66 +67,117 @@ let RDTreeIgnore = [
   \'\.swo$',
   \'\.swp$',
   \'tags$'
-\]
-set cc=80
-set smartindent                    " Liga a identação inteligente
-set backspace=indent,eol,start     " Allow backspacing over everything in insert mode.
-set history=200		           " keep 200 lines of command line history
-set ruler		           " Exibi o cursor na posição que o arquivo foi encerado
-set ttimeout		           " Tempo limites para códigos-chaves
-set ttimeoutlen=100	           " Espera ate 1000ms após ESC para chaves especiais
+ \]
+"let g:airline_theme = 'delek'
+"let g:airline_theme = 'archery'
+
+ set cc=80
+ set smartindent                     " Liga a identação inteligente
+ set backspace=indent,eol,start      " Allow backspacing over everything in insert mode.
+ set history=200		                  " keep 200 lines of command line history
+ set ruler		                        " Exibi o cursor na posição que o arquivo foi encerado
+ set ttimeout		                    " Tempo limites para códigos-chaves
+ set ttimeoutlen=100	                " Espera ate 1000ms após ESC para chaves especiais
+ set nrformats-=octal                " Não reconhece números octais
+ set ts=2                            "tab 
+ set tabstop=4
+ set softtabstop=4
+ set number
+ set showcmd                         " Mostrar números de linha não deve ser justificada.
+ set cursorline                      " Descobri que isso facilita o acompanhamento da linha que você deixou de mudar
+ set wildmenu                        " Autocompletar visual para menu de comando
+ set number                          " exibi numeros na lateral
+ set autoindent                      " auto indentacao
+ set title                           " exibe titulo arquivo
+ set nowrap                          " nao quebra linha quando tem uma string grande
+ set scrolloff=5                     " exibi sempre 5 linha não deicha cursor tocar no fim do arquivo
+ set wildmode=list:longest,full
+ set shiftwidth=4
+ set showtabline=2
+ set laststatus=2
+ set encoding=utf8
+ set linebreak                       " Quebra a linha sem quebrar a palavra
+ set nobackup                        " Não salva arquivos de backup~
+ set wildmode=longest,list           " Completa o comando com TAB igual o bash
+ set ignorecase                      " Ignora o case sensitive nas buscas
+ set smartcase                       " Se tiver alguma letra maiúscula, ativa o case sensitive
+ set gdefault                        " Sempre substitui todas as palavras, não só a primeira
+ set smartindent                     " Auto-indenta
+ set expandtab                       " Identa com espaços
+ set tabstop=2                       " Quantidade de espaços por indentação
+ set shiftwidth=2                    " Quantidade de espaços da auto-indentação
+ set guioptions-=T                   " Deixa a GUI sem a toolbar
+ set autochdir                       " Vai pro diretório do arquivo aberto
+ set cursorline                      " Mostra linha atual mais clara
+ set hlsearch                        " Termo procurado em destaque
+ set pumheight=15                    " Máximo de palavras no popup de autocomplete
+ set completeopt=menu,preview        " Como mostrar as possibilidade de inserção
+ set spelllang=pt                    " Escolhe o dicionário
+ set eb                              " Apita cada vez que você errar um comando.
 "set display=truncate               " Show @@@ in the last line if it is truncated.
-set bk                              "ativa backup
-set backupdir=expand('~/.vim/backup/') "pasta de backuo 
-set nrformats-=octal               " Não reconhece números octais
-set ts=2                          "tab 
-set tabstop=4
-set softtabstop=4
-set number
-set showcmd                        " Mostrar números de linha não deve ser justificada.
-set cursorline                     " Descobri que isso facilita o acompanhamento da linha que você deixou de mudar
-set wildmenu                       " Autocompletar visual para menu de comando
-set number                         " exibi numeros na lateral
-set autoindent                     " auto indentacao
-set title                          " exibe titulo arquivo
-set nowrap                         " nao quebra linha quando tem uma string grande
-set scrolloff=5                    " exibi sempre 5 linha não deicha cursor tocar no fim do arquivo
-"set paste                          " indenta no ato de colar
-set wildmode=list:longest,full
-set shiftwidth=4
-set showtabline=2
-set laststatus=2
-set encoding=utf8
-"set mouse=a		            " Enable mouse usage (all modes)
-set linebreak                      " Quebra a linha sem quebrar a palavra
-set nobackup                       " Não salva arquivos de backup~
-set wildmode=longest,list          " Completa o comando com TAB igual o bash
-set ignorecase                     " Ignora o case sensitive nas buscas
-set smartcase                      " Se tiver alguma letra maiúscula, ativa o case sensitive
-set gdefault                       " Sempre substitui todas as palavras, não só a primeira
-set smartindent                    " Auto-indenta
-set expandtab                      " Identa com espaços
-set tabstop=2                      " Quantidade de espaços por indentação
-set shiftwidth=2                   " Quantidade de espaços da auto-indentação
-set guioptions-=T                  " Deixa a GUI sem a toolbar
-set autochdir                      " Vai pro diretório do arquivo aberto
-set cursorline                     " Mostra linha atual mais clara
-set hlsearch                       " Termo procurado em destaque
-set pumheight=15                   " Máximo de palavras no popup de autocomplete
-set completeopt=menu,preview       " Como mostrar as possibilidade de inserção
-set spelllang=pt                   " Escolhe o dicionário
-set eb                             " Apita cada vez que você errar um comando.
+"set bk                             "ativa backup
+"set backupdir=expand('~/.vim/backup/')  "pasta de backuo 
 "set spell                          " checking ortografia
-"set spell spelllang=pt            " set idioma
-"fecha automaticamente (), {},[], \"" e '' 
-imap ( ()<esc>i                    
-inoremap ( ()<esc>i
-inoremap { {<Char-13>}<esc>i
-inoremap [ []<esc>
-inoremap " ""<esc>i
-inoremap ' ''<esc>i
+"set spell spelllang=pt             " set idioma
+"set paste                          " indenta no ato de colar
+"set mouse=a		                    " Enable mouse usage (all modes)
 
+syntax on
 
+"colorscheme archery
+"colorscheme delek
+"colorscheme torte
+ colorscheme dracula
+ 
+ filetype indent on                "carregar arquivos de recuo específicos do tipo de arquivo
+ filetype plugin indent on
+
+ highlight Normal ctermbg   =Black
+ highlight Cursor ctermbg   =Green
+ highlight NonText ctermbg  =Black
+ highlight Special ctermbg  =DarkMagenta
+ highlight Comment ctermbg  =DarkGray
+ highlight Constant ctermbg =Blue
+ highlight Comment cterm    =underline ctermbg=Blue ctermfg=White
+ highlight clear SpellBad
+ highlight SpellBad term=reverse cterm=underline
+"highlight Comment ctermbg  =Blue ctermfg=White
+
+ inoremap <C-T> <C-O>:tabnew<CR>    " Abas
+ inoremap <C-TAB> <C-O>:tabnext<CR>
+ inoremap <C-S-TAB> <C-O>:tabprevious<CR>
+ inoremap <C-F4> <C-O>:x!<CR>
+ inoremap <C-U> <C-G>u<C-U>
+ inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
+ inoremap <c-z> <c-o>:u<CR>
+"inoremap ( ()<esc>i                "fecha automaticamente (), {},[], \"" e '' 
+"inoremap { {<Char-13>}<esc>i       "fecha automaticamente (), {},[], \"" e '' 
+"inoremap [ []<esc>                 "fecha automaticamente (), {},[], \"" e '' 
+"inoremap " ""<esc>i                "fecha automaticamente (), {},[], \"" e '' 
+"inoremap ' ''<esc>i                "fecha automaticamente (), {},[], \"" e '' 
+
+ map Q gq
+ map <F2> :tabnew<CR>               " Abre um novo arquivo em outra aba
+ map <C-S> :w <CR> 
+ map <C-C> y
+ map <C-X> x
+"map <F3> gt                        " Navega arquivo em outra aba
+"map <F7> :SpellCheck<CR>
+"map <F8> :SpellProposeAlternatives<CR>
+
+ nmap <F3> :vimgrep<space><CR>
+ nmap <F4> :NERDTreeToggle<CR>
+ nmap  <C-Z> <esc>u
+ nmap <C-v> <esc>p i
+ nmap <silent> <M-Down> :call ScrollOtherWindow("down")<CR>
+ nmap <silent> <M-Up> :call ScrollOtherWindow("up")<CR>
+
+ imap <C-V> <esc>p i
+ imap  <C-Z> <esc>u
+ imap ><Tab> ><Esc>mt?<\w<Cr>:let @/=""<Cr>lyiw`ta</><Esc>P`tli "Fechamento automático de Tags HTML
+"imap ( ()<esc>i                 "fecha automaticamente (), {},[], \"" e '' 
+
+ vmap <C-V> <esc>p i
 
 " Verificar compatibilidade.
 if &compatible
@@ -254,7 +253,6 @@ autocmd BufReadPost *
     \   exe "normal g`\"" |
     \ endif
 
-
  " rola janela alternativa
  fun! ScrollOtherWindow(dir)
         if a:dir == "down"
@@ -264,15 +262,13 @@ autocmd BufReadPost *
         endif
         exec "normal \<C-W>p" . move . "\<C-W>p"
  endfun
- nmap <silent> <M-Down> :call ScrollOtherWindow("down")<CR>
- nmap <silent> <M-Up> :call ScrollOtherWindow("up")<CR>
 
 
 "---------------------- NOTAS VIM--------------------------
 "criei um arquivo chamado dicionario onde coloco todas as palavras que
 "ultimai-o para codigo entao adicionei esse trexo abaixo para dar o auto
 "coplite no vim apertando Ctrl+x e Ctrl+k ai ele completa
-"set dictionary=/opt/dicionarioVim/*
+"set dictionary=/opt/dicionarioVim/*
 
 
 "nnoremap <silent> <leader>a :ArgWrap<CR>
