@@ -8,6 +8,6 @@ everyday development with a lightweight vim editor
 
 ### Screenshot
 
-![screenshot]('')
+![screenshot]('https://github.com/juniored22/my-vim/blob/master/Screenshot.png')
 
 
