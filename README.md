@@ -7,6 +7,6 @@ everyday development with a lightweight vim editor
 
 
 ### Screenshot
-![screenshot]('Screenshot.png')
+<img src="Screenshot.png">
 
 
