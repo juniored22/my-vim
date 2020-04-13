@@ -36,4 +36,10 @@
 	url = https://github.com/vim-scripts/taglist.vim
 [submodule ".vim/bundle/vim-multiple-cursors"]
 	path = .vim/bundle/vim-multiple-cursors
-	url = https://github.com/terryma/vim-multiple-cursors.git
+  url = https://github.com/terryma/vim-multiple-cursors.git
+[submodule ".vim/bundle/neobundle"]
+  path = .vim/bundle/neobundle
+  url = git clone https://github.com/Shougo/neobundle.vim
+[submodule ".vim/bundle/vim-devicons"]
+	path = .vim/bundle/vim-devicons
+	url = https://github.com/ryanoasis/vim-devicons

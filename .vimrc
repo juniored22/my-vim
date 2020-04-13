@@ -70,7 +70,12 @@
  \]
 "let g:airline_theme = 'delek'
 "let g:airline_theme = 'archery'
-
+ 
+ set listchars=tab:\│\ ,trail:-,extends:>,precedes:<,nbsp:+
+ set cursorcolumn
+ set cursorline
+"set list lcs=trail:·,tab:..
+ set list
  set cc=80
  set smartindent                     " Liga a identação inteligente
  set backspace=indent,eol,start      " Allow backspacing over everything in insert mode.
@@ -263,7 +268,17 @@ autocmd BufReadPost *
         exec "normal \<C-W>p" . move . "\<C-W>p"
  endfun
 
+fu! ToggleCurline ()
+  if &cursorline && &cursorcolumn
+    set nocursorline
+    set nocursorcolumn
+  else
+    set cursorline
+    set cursorcolumn
+  endif
+endfunction
 
+map <silent><leader>cl :call ToggleCurline()<CR>
 "---------------------- NOTAS VIM--------------------------
 "criei um arquivo chamado dicionario onde coloco todas as palavras que
 "ultimai-o para codigo entao adicionei esse trexo abaixo para dar o auto
