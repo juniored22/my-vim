@@ -16,4 +16,8 @@ everyday development with a lightweight vim editor
 mkdir -p ~/.local/share/fonts
 cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
 
-
+### Install plugins
+```sh
+cd  ~/.vim/bundle/  && git clone https://github.com/dracula/vim.git 
+cd  ~/.vim/bundle/  && https://github.com/preservim/nerdtree.git
+```
